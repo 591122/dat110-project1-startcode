@@ -2,7 +2,7 @@ package no.hvl.dat110.messaging;
 
 
 import java.io.IOException;
-
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import no.hvl.dat110.TODO;
@@ -26,8 +26,15 @@ public class MessagingClient {
 		// TODO - START
 		// create TCP socket for client and connection
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		clientSocket = new Socket();
+		try {
+			clientSocket.connect(new InetSocketAddress (server, port));
+			connection = new Connection(clientSocket);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		// TODO - END
 		return connection;

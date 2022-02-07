@@ -46,9 +46,19 @@ public class RPCServer {
 		   // - lookup the method to be invoked
 		   // - invoke the method
 		   // - send back message containing RPC reply
+			requestmsg = connection.receive();
 			
-		   if (true)
-				throw new UnsupportedOperationException(TODO.method());
+			byte[] encoded = requestmsg.getData();
+			rpcid = encoded[0];
+			
+			RPCRemoteImpl rpcimpl = services.get(rpcid);
+			
+			byte[] returnval = rpcimpl.invoke(RPCUtils.decapsulate(encoded));
+			
+			replymsg = new Message(RPCUtils.encapsulate(rpcid, returnval));
+			connection.send(replymsg);
+			
+		   
 		   
 		   // TODO - END
 		   
